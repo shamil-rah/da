@@ -1,8 +1,21 @@
-
 import { useState } from "react";
-import { Calendar, Clock, MapPin, Star, DollarSign, Camera, User } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Star,
+  DollarSign,
+  Camera,
+  User,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PageLayout from "@/components/PageLayout";
 import { motion } from "framer-motion";
@@ -19,7 +32,7 @@ const ClientView = () => {
       price: 150,
       duration: "1 hour",
       description: "Professional headshots and portrait sessions",
-      image: "/placeholder.svg"
+      image: "/placeholder.svg",
     },
     {
       id: "event",
@@ -27,7 +40,7 @@ const ClientView = () => {
       price: 300,
       duration: "3 hours",
       description: "Capture your special moments and celebrations",
-      image: "/placeholder.svg"
+      image: "/placeholder.svg",
     },
     {
       id: "product",
@@ -35,12 +48,17 @@ const ClientView = () => {
       price: 200,
       duration: "2 hours",
       description: "High-quality product shots for your business",
-      image: "/placeholder.svg"
-    }
+      image: "/placeholder.svg",
+    },
   ];
 
   const availableTimes = [
-    "9:00 AM", "10:00 AM", "11:00 AM", "2:00 PM", "3:00 PM", "4:00 PM"
+    "9:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "2:00 PM",
+    "3:00 PM",
+    "4:00 PM",
   ];
 
   const portfolioImages = [
@@ -49,14 +67,17 @@ const ClientView = () => {
     "/placeholder.svg",
     "/placeholder.svg",
     "/placeholder.svg",
-    "/placeholder.svg"
+    "/placeholder.svg",
   ];
 
   return (
-    <PageLayout title="Book Florence Shaw" subtitle="Professional photographer specializing in portraits and events">
+    <PageLayout
+      title="Book Florence Shaw"
+      subtitle="Professional photographer specializing in portraits and events"
+    >
       <div className="space-y-8">
         {/* Photographer Profile */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -68,15 +89,24 @@ const ClientView = () => {
                   <User className="h-12 w-12 text-gray-400" />
                 </div>
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-gray-900">Florence Shaw</h2>
-                  <p className="text-gray-600 mt-1">Professional Photographer</p>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    Florence Shaw
+                  </h2>
+                  <p className="text-gray-600 mt-1">
+                    Professional Photographer
+                  </p>
                   <div className="flex items-center gap-2 mt-2">
                     <div className="flex items-center">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        <Star
+                          key={i}
+                          className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                        />
                       ))}
                     </div>
-                    <span className="text-sm text-gray-600">(4.9) • 127 reviews</span>
+                    <span className="text-sm text-gray-600">
+                      (4.9) • 127 reviews
+                    </span>
                   </div>
                   <div className="flex items-center gap-4 mt-3 text-sm text-gray-600">
                     <div className="flex items-center gap-1">
@@ -95,7 +125,7 @@ const ClientView = () => {
         </motion.div>
 
         {/* Services */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -103,7 +133,9 @@ const ClientView = () => {
           <Card>
             <CardHeader>
               <CardTitle>Services</CardTitle>
-              <CardDescription>Choose from our photography packages</CardDescription>
+              <CardDescription>
+                Choose from our photography packages
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-3">
@@ -118,8 +150,12 @@ const ClientView = () => {
                     onClick={() => setSelectedService(service.id)}
                   >
                     <div className="aspect-square bg-gray-100 rounded-lg mb-3" />
-                    <h3 className="font-semibold text-gray-900">{service.name}</h3>
-                    <p className="text-sm text-gray-600 mt-1">{service.description}</p>
+                    <h3 className="font-semibold text-gray-900">
+                      {service.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {service.description}
+                    </p>
                     <div className="flex items-center justify-between mt-3">
                       <div className="flex items-center gap-2">
                         <DollarSign className="h-4 w-4 text-gray-600" />
@@ -138,7 +174,7 @@ const ClientView = () => {
         </motion.div>
 
         {/* Booking */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -146,7 +182,9 @@ const ClientView = () => {
           <Card>
             <CardHeader>
               <CardTitle>Book Your Session</CardTitle>
-              <CardDescription>Select your preferred date and time</CardDescription>
+              <CardDescription>
+                Select your preferred date and time
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
@@ -186,10 +224,10 @@ const ClientView = () => {
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-lg font-semibold">Total</span>
                   <span className="text-2xl font-bold">
-                    ${services.find(s => s.id === selectedService)?.price}
+                    ${services.find((s) => s.id === selectedService)?.price}
                   </span>
                 </div>
-                <Button 
+                <Button
                   className="w-full bg-gray-900 hover:bg-gray-800 text-white"
                   disabled={!selectedDate || !selectedTime}
                 >
@@ -201,7 +239,7 @@ const ClientView = () => {
         </motion.div>
 
         {/* Portfolio Preview */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -209,12 +247,17 @@ const ClientView = () => {
           <Card>
             <CardHeader>
               <CardTitle>Portfolio</CardTitle>
-              <CardDescription>Recent work and client favorites</CardDescription>
+              <CardDescription>
+                Recent work and client favorites
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {portfolioImages.map((image, index) => (
-                  <div key={index} className="aspect-square bg-gray-100 rounded-lg" />
+                  <div
+                    key={index}
+                    className="aspect-square bg-gray-100 rounded-lg"
+                  />
                 ))}
               </div>
             </CardContent>

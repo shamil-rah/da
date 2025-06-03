@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -32,7 +31,7 @@ const queryClient = new QueryClient({
 const App = () => {
   // State to track if user is authenticated
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
+
   // State to track if user is a new signup that needs onboarding
   const [isNewUser, setIsNewUser] = useState(false);
 
@@ -73,13 +72,17 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               {/* Auth page - visible for non-authenticated users */}
-              <Route 
-                path="/" 
+              <Route
+                path="/"
                 element={
-                  isAuthenticated ? 
-                    (isNewUser ? <Navigate to="/onboarding" /> : <Navigate to="/dashboard" />) 
-                    : 
-                    <Auth 
+                  isAuthenticated ? (
+                    isNewUser ? (
+                      <Navigate to="/onboarding" />
+                    ) : (
+                      <Navigate to="/dashboard" />
+                    )
+                  ) : (
+                    <Auth
                       onAuthenticate={() => {
                         setIsAuthenticated(true);
                         setIsNewUser(false); // Existing users don't need onboarding
@@ -89,64 +92,65 @@ const App = () => {
                         setIsNewUser(true); // New users need onboarding
                       }}
                     />
-                } 
+                  )
+                }
               />
-              
+
               {/* Onboarding page - only for new users */}
-              <Route 
-                path="/onboarding" 
+              <Route
+                path="/onboarding"
                 element={
                   <OnboardingRoute>
                     <Onboarding onComplete={() => setIsNewUser(false)} />
                   </OnboardingRoute>
-                } 
+                }
               />
-              
+
               {/* Protected app pages - only accessible when authenticated and onboarded */}
-              <Route 
-                path="/dashboard" 
+              <Route
+                path="/dashboard"
                 element={
                   <ProtectedRoute>
                     <Dashboard />
                   </ProtectedRoute>
-                } 
+                }
               />
-              <Route 
-                path="/portfolio" 
+              <Route
+                path="/portfolio"
                 element={
                   <ProtectedRoute>
                     <Portfolio />
                   </ProtectedRoute>
-                } 
+                }
               />
-              <Route 
-                path="/availability" 
+              <Route
+                path="/availability"
                 element={
                   <ProtectedRoute>
                     <Availability />
                   </ProtectedRoute>
-                } 
+                }
               />
-              <Route 
-                path="/pricing" 
+              <Route
+                path="/pricing"
                 element={
                   <ProtectedRoute>
                     <Pricing />
                   </ProtectedRoute>
-                } 
+                }
               />
-              <Route 
-                path="/bookings" 
+              <Route
+                path="/bookings"
                 element={
                   <ProtectedRoute>
                     <Bookings />
                   </ProtectedRoute>
-                } 
+                }
               />
-              
+
               {/* Public client booking page - always accessible */}
               <Route path="/:username" element={<ClientView />} />
-              
+
               {/* 404 page */}
               <Route path="*" element={<NotFound />} />
             </Routes>
