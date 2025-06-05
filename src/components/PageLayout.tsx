@@ -5,6 +5,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
+import { useAppContext } from "@/contexts/AppContext";
 import { motion } from "framer-motion";
 
 interface PageLayoutProps {
@@ -14,15 +15,30 @@ interface PageLayoutProps {
 }
 
 const PageLayout = ({ children, title, subtitle }: PageLayoutProps) => {
+  const { toggleSidebar } = useAppContext();
+  const { isSidebarCollapsed } = useAppContext();
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-gray-50">
-        <AppSidebar />
+        <div
+          className={`transition-all duration-300 ${
+            isSidebarCollapsed ? "w-16" : "w-64"
+          }`}
+        >
+          <AppSidebar />
+        </div>
         <SidebarInset className="flex-1 relative">
           {/* Main content container with responsive design */}
           <div className="absolute inset-0 bg-white rounded-none md:rounded-l-lg shadow-none md:shadow-2xl border-none md:border-l md:border-gray-200 ml-0 md:ml-2 mt-0 md:mt-2 mb-0 md:mb-2 flex flex-col">
             <header className="flex h-12 sm:h-14 md:h-16 shrink-0 items-center gap-2 border-b border-gray-200 bg-white px-3 sm:px-4 md:px-6 rounded-none md:rounded-tl-lg">
-              <SidebarTrigger className="-ml-1 text-gray-600 hover:text-gray-900" />
+              <button
+                onClick={toggleSidebar}
+                className="-ml-1 text-gray-600 hover:text-gray-900"
+              >
+                ☰
+              </button>
+
               <div className="flex-1" />
             </header>
 

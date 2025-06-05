@@ -1,15 +1,13 @@
-
 import { createContext, useContext, useState, ReactNode } from "react";
-import { 
-  userData, 
-  portfolioImages, 
-  servicesData, 
-  bookingsData, 
-  earningsData, 
-  availabilityData 
+import {
+  userData,
+  portfolioImages,
+  servicesData,
+  bookingsData,
+  earningsData,
+  availabilityData,
 } from "../data/dummyData";
 
-// Define types for our context data
 interface AppContextType {
   user: typeof userData;
   updateUser: (data: Partial<typeof userData>) => void;
@@ -25,14 +23,15 @@ interface AppContextType {
   earnings: typeof earningsData;
   availability: typeof availabilityData;
   updateAvailability: (data: Partial<typeof availabilityData>) => void;
+
+  isSidebarCollapsed: boolean;
+  toggleSidebar: () => void;
+  setSidebarCollapsed: (value: boolean) => void;
 }
 
-// Create the context with a default value
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-// Provider component
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-  // Initialize state with dummy data
   const [user, setUser] = useState(userData);
   const [portfolio, setPortfolio] = useState(portfolioImages);
   const [services, setServices] = useState(servicesData);
@@ -40,37 +39,36 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [earnings, setEarnings] = useState(earningsData);
   const [availability, setAvailability] = useState(availabilityData);
 
-  // Functions to update state
-  const updateUser = (data: Partial<typeof userData>) => {
-    setUser(prev => ({ ...prev, ...data }));
+  // Sidebar state (key addition)
+  const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed((prev) => !prev);
   };
 
+  const updateUser = (data: Partial<typeof userData>) => {
+    setUser((prev) => ({ ...prev, ...data }));
+  };
   const updatePortfolio = (data: typeof portfolioImages) => {
     setPortfolio(data);
   };
-
   const addPortfolioImage = (image: (typeof portfolioImages)[0]) => {
-    setPortfolio(prev => [...prev, image]);
+    setPortfolio((prev) => [...prev, image]);
   };
-
   const updateServices = (data: typeof servicesData) => {
     setServices(data);
   };
-
   const addService = (service: (typeof servicesData)[0]) => {
-    setServices(prev => [...prev, service]);
+    setServices((prev) => [...prev, service]);
   };
-
   const updateBookings = (data: typeof bookingsData) => {
     setBookings(data);
   };
-
   const addBooking = (booking: (typeof bookingsData)[0]) => {
-    setBookings(prev => [...prev, booking]);
+    setBookings((prev) => [...prev, booking]);
   };
-
   const updateAvailability = (data: Partial<typeof availabilityData>) => {
-    setAvailability(prev => ({ ...prev, ...data }));
+    setAvailability((prev) => ({ ...prev, ...data }));
   };
 
   const value = {
@@ -88,12 +86,14 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     earnings,
     availability,
     updateAvailability,
+    isSidebarCollapsed,
+    toggleSidebar,
+    setSidebarCollapsed,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
-// Custom hook to use the AppContext
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (context === undefined) {

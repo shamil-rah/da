@@ -21,6 +21,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
+import { useAppContext } from "@/contexts/AppContext";
+
 const navigationItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home },
   { title: "Portfolio", url: "/portfolio", icon: Image },
@@ -32,30 +34,30 @@ const navigationItems = [
 
 export function AppSidebar() {
   const location = useLocation();
-  const { state } = useSidebar();
-  const isCollapsed = state === "collapsed";
+  const { isSidebarCollapsed } = useAppContext();
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
     <Sidebar
-      //className="border-r border-gray-800/20 bg-black"
-      collapsible="icon"
+      className={`transition-all duration-300 ${
+        isSidebarCollapsed ? "w-16" : "w-64"
+      }`}
     >
       <SidebarHeader
         className={`border-b border-gray-800/20 ${
-          isCollapsed ? "px-1 py-2 sm:px-0 sm:py-3" : "p-2 sm:p-4"
+          isSidebarCollapsed ? "px-1 py-2 sm:px-0 sm:py-3" : "p-2 sm:p-4"
         }`}
       >
         <div
           className={`flex items-center ${
-            isCollapsed ? "justify-center w-full" : "gap-2"
+            isSidebarCollapsed ? "justify-center w-full" : "gap-2"
           }`}
         >
           <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-lg bg-white flex items-center justify-center flex-shrink-0">
             <span className="text-black font-bold text-xs sm:text-sm">B</span>
           </div>
-          {!isCollapsed && (
+          {!isSidebarCollapsed && (
             <span className="font-semibold text-sm sm:text-lg text-white truncate">
               Boothly
             </span>
@@ -65,7 +67,7 @@ export function AppSidebar() {
 
       <SidebarContent
         className={`${
-          isCollapsed ? "px-1 sm:px-0" : "px-2 sm:px-3"
+          isSidebarCollapsed ? "px-1 sm:px-0" : "px-2 sm:px-3"
         } py-2 sm:py-4`}
       >
         <SidebarGroup>
@@ -81,22 +83,22 @@ export function AppSidebar() {
                         ? "bg-gray-800 text-white border border-gray-700"
                         : "text-gray-400 hover:bg-gray-900 hover:text-white"
                     } ${
-                      isCollapsed
+                      isSidebarCollapsed
                         ? "justify-center mx-0 h-8 sm:h-10"
                         : "justify-start h-9 sm:h-10"
                     }`}
-                    tooltip={isCollapsed ? item.title : undefined}
+                    tooltip={isSidebarCollapsed ? item.title : undefined}
                   >
                     <Link
                       to={item.url}
                       className={`flex items-center ${
-                        isCollapsed
+                        isSidebarCollapsed
                           ? "justify-center w-full h-full"
                           : "gap-2 sm:gap-3 px-2 sm:px-3 py-2 sm:py-2.5"
                       }`}
                     >
                       <item.icon className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
-                      {!isCollapsed && (
+                      {!isSidebarCollapsed && (
                         <span className="font-medium text-sm sm:text-base truncate">
                           {item.title}
                         </span>
@@ -110,7 +112,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      {!isCollapsed && (
+      {!isSidebarCollapsed && (
         <SidebarFooter className="p-2 sm:p-4 border-t border-gray-800/20">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0">
